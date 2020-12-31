@@ -5,7 +5,11 @@
   "projects": {
     "cookit-angular": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -24,12 +28,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "node_modules/@sbb-esta/angular-business/typography.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "localize": true,
+              "outputPath": "dist",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -55,6 +62,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "es5": {
+              "tsConfig": "tsconfig.app.es5.json"
             }
           }
         },
@@ -87,21 +97,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         },
@@ -115,6 +121,28 @@
             "production": {
               "devServerTarget": "cookit-angular:serve:production"
             }
+          }
+        },
+        "ngsscbuild": {
+          "builder": "angular-server-side-configuration:ngsscbuild",
+          "options": {
+            "additionalEnvironmentVariables": [],
+            "browserTarget": "cookit-angular:build",
+            "ngsscEnvironmentFile": "src/environments/environment.prod.ts",
+            "filePattern": "**/index.html"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cookit-angular:build:production"
+            }
+          }
+        },
+        "t9n": {
+          "builder": "angular-t9n:t9n",
+          "options": {
+            "translationFile": "src/i18n/messages.xlf",
+            "targetTranslationPath": "src/i18n",
+            "includeContextInTarget": false
           }
         }
       }
