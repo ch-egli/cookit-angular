@@ -1,7 +1,7 @@
-<h1>{{ title }}</h1>
-
 <div *ngIf="claims; else loginTemplate">
+<!--
   <h4>User Info</h4>
+  <p>Hello {{claims['given_name']}}. This are your claims...</p>
   <pre>{{ claims | json }}</pre>
 
   <button type="button" sbbButton mode="secondary" (click)="logout()">Logout</button>
@@ -19,10 +19,21 @@
       </tbody>
     </table>
   </div>
+-->
+  <app-nav></app-nav>
+<!--
+  <button type="button" sbbButton mode="secondary" (click)="logout()">Logout</button>
+-->
+  <router-outlet></router-outlet>
 </div>
 
 <ng-template #loginTemplate>
+  <h1>{{ title }}</h1>
+<!--
+  <p>Claims:</p>
+  <pre>{{ claims | json }}</pre>
+  <button type="button" sbbButton mode="secondary" (click)="logout()">Logout</button>
+-->
   <button type="button" sbbButton (click)="login()">Login with Google</button>
 </ng-template>
 
-<router-outlet></router-outlet>

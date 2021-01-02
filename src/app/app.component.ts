@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthService } from './core/auth.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = $localize`Cookit`;
+  title = `Cookit`;
 
   apiResult: Object = '';
 
@@ -37,9 +37,8 @@ export class AppComponent {
   }
 
   callApi() {
-    const authHeaders = new HttpHeaders(
-      {'Authorization': 'Bearer ' + this.authService.getIdToken()}
-    );
-    this.http.get('https://cookit-api.snoopfish.ch/api/recipes', { headers: authHeaders, responseType: 'json'}).subscribe((data => this.apiResult = data))
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    this.http.get('https://cookit-api.snoopfish.ch/api/recipes', {headers: authHeaders, responseType: 'json'})
+      .subscribe((data => this.apiResult = data));
   }
 }

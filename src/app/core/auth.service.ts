@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { resourceAccess } from '@sbb-esta/angular-core/oauth';
 import { OAuthService, UserInfo } from 'angular-oauth2-oidc';
 import { first } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -69,12 +68,5 @@ export class AuthService {
     const idToken = this.oauthService.getIdToken();
     console.log('ID Token: ' + idToken);
     return idToken;
-  }
-
-  async hasRole(role: string) {
-    // Await the successful login of the user.
-    await this.initialized;
-    const clients = resourceAccess(this.oauthService);
-    return Object.keys(clients).some((c) => clients[c].roles.includes(role));
   }
 }

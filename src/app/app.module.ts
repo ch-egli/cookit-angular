@@ -10,9 +10,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MenuItemComponent } from './menu-item/menu-item.component';
+import { NavComponent } from './nav/nav.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,6 +33,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         sendAccessToken: false,
       },
     }),
+    MenubarModule,
     AppRoutingModule,
   ],
   providers: [SBB_ICON_REGISTRY_PROVIDER],
