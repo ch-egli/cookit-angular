@@ -39,6 +39,7 @@ export class NavComponent implements OnInit {
       {
         label:'Logout',
         icon:'pi pi-fw pi-power-off',
+        routerLink: ['/'],
         command: (event) => {
           this.authService.logOut();
         }

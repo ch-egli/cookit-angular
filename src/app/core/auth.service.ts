@@ -69,4 +69,8 @@ export class AuthService {
     console.log('ID Token: ' + idToken);
     return idToken;
   }
+
+  isLoggedIn() {
+    return this.oauthService.hasValidIdToken();
+  }
 }
