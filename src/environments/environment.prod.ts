@@ -1,4 +1,3 @@
-import { SBB_SSO_IDP_HINT_AZURE_AD, SBB_SSO_ISSUER_URL } from '@sbb-esta/angular-core/oauth';
 import { AuthConfig } from 'angular-oauth2-oidc';
 import 'angular-server-side-configuration/process';
 
@@ -19,21 +18,16 @@ import { Environment } from './environment.model';
  * };
  */
 
-// See https://confluence.sbb.ch/display/CLEW/sso.sbb.ch
-const authConfig: AuthConfig = {
-  issuer: SBB_SSO_ISSUER_URL,
-  // The ClientId you created in the Client tab in am-ssp
-  clientId: 'your-client-from-am-ssp',
+export const authConfig: AuthConfig = {
+  issuer: 'https://accounts.google.com',
   redirectUri: location.origin,
-  responseType: 'code',
-  // Add offline_access scope, after RedHat SSO 7.3 has been rolled out:
-  // https://confluence.sbb.ch/pages/viewrecentblogposts.action?key=IAM
-  scope: 'openid profile email sbbuid_ad',
-  // The hint will ensure your clients will directly use the AzureAD identity provider.
-  // Remove the line to enable the client to select from all available identity providers.
-  customQueryParams: SBB_SSO_IDP_HINT_AZURE_AD,
-  disableAtHashCheck: true,
-  postLogoutRedirectUri: location.origin,
+  silentRefreshRedirectUri: location.origin + '/silent-refresh.html',
+  clientId: '288131662449-77rbf5afprn0u7nugord6k8hr7p63tjm.apps.googleusercontent.com',
+  strictDiscoveryDocumentValidation: false,
+  scope: 'openid profile email',
+
+  showDebugInformation: true,
+  sessionChecksEnabled: true
 };
 
 export const environment: Environment = {

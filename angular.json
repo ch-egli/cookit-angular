@@ -10,6 +10,9 @@
           "style": "scss"
         }
       },
+      "i18n": {
+        "sourceLocale": {"baseHref": ""}
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -82,12 +85,6 @@
             }
           }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "cookit-angular:build"
-          }
-        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -138,14 +135,6 @@
             "production": {
               "browserTarget": "cookit-angular:build:production"
             }
-          }
-        },
-        "t9n": {
-          "builder": "angular-t9n:t9n",
-          "options": {
-            "translationFile": "src/i18n/messages.xlf",
-            "targetTranslationPath": "src/i18n",
-            "includeContextInTarget": false
           }
         }
       }
