@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 import { environment } from '../../environments/environment';
+import {Observable} from 'rxjs';
+import {OAuthEvent} from 'angular-oauth2-oidc/events';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +44,7 @@ export class AuthService {
     this.oauthService.events.pipe(first((e) => e.type === 'token_received')).subscribe(() => {
       // This is required for RedHat SSO, since they encode the state.
       const state = decodeURIComponent(this.oauthService.state || '');
+      console.log('authService event -> token_received => state: ' + state);
       if (state && state !== '/') {
         this.router.navigate([state]);
       }
@@ -66,11 +69,15 @@ export class AuthService {
 
   getIdToken() {
     const idToken = this.oauthService.getIdToken();
-    console.log('ID Token: ' + idToken);
+    // console.log('ID Token: ' + idToken);
     return idToken;
   }
 
   isLoggedIn() {
     return this.oauthService.hasValidIdToken();
+  }
+
+  getEvents(): Observable<OAuthEvent> {
+    return this.oauthService.events;
   }
 }

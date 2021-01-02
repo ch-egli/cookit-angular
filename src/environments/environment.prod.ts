@@ -33,4 +33,5 @@ export const authConfig: AuthConfig = {
 export const environment: Environment = {
   production: process.env.PRODUCTION !== 'false',
   authConfig,
+  backendUrl: 'https://cookit-api.snoopfish.ch'
 };
