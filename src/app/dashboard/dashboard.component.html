@@ -1,22 +1,30 @@
 <div *ngIf="hasValidSession; else emptyDashboardTemplate">
-<p>Dashboard</p>
-  <div class="container">
-    <table class="table table-striped table-bordered">
-      <tbody>
-      <tr *ngFor="let item of recipes">
-        <td>{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.category }}</td>
-        <td>{{ item.effort }}</td>
-        <td>{{ item.tags }}</td>
-<!--
-        <td>{{ item.created_at }}</td>
-        <td>{{ item.updated_at }}</td>
--->
-      </tr>
-      </tbody>
-    </table>
+  <p>&nbsp;</p>
+  <div>
+    <p-table [value]="recipes" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th class="d-none d-md-table-cell">Category</th>
+          <th class="d-none d-md-table-cell">Effort</th>
+          <th class="d-none d-md-table-cell">Tags</th>
+          <th class="d-none d-lg-table-cell">Created</th>
+          <th class="d-none d-lg-table-cell">Updated</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-recipe>
+        <tr>
+          <td>{{recipe.title}}</td>
+          <td>{{recipe.description}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.category}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.effort}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.tags}}</td>
+          <td class="d-none d-lg-table-cell">{{recipe.created_at}}</td>
+          <td class="d-none d-lg-table-cell">{{recipe.updated_at}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 
 </div>

@@ -14,6 +14,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
 import { NavComponent } from './nav/nav.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MenubarModule } from 'primeng/menubar';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -34,6 +35,7 @@ import { MenubarModule } from 'primeng/menubar';
       },
     }),
     MenubarModule,
+    TableModule,
     AppRoutingModule,
   ],
   providers: [SBB_ICON_REGISTRY_PROVIDER],

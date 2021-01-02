@@ -27,6 +27,7 @@
     "@sbb-esta/angular-business": "^11.0.1",
     "@sbb-esta/angular-core": "^11.0.1",
     "angular-oauth2-oidc": "^10.0.2",
+    "bootstrap": "^4.5.3",
     "primeng": "^11.0.0",
     "primeicons": "^4.1.0",
     "angular-server-side-configuration": "^11.0.2",
