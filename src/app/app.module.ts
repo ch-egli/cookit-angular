@@ -15,6 +15,7 @@ import { NavComponent } from './nav/nav.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MenubarModule } from 'primeng/menubar';
 import { TableModule } from 'primeng/table';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -34,6 +35,7 @@ import { TableModule } from 'primeng/table';
         sendAccessToken: false,
       },
     }),
+    SharedModule,
     MenubarModule,
     TableModule,
     AppRoutingModule,

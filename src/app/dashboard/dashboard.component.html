@@ -15,13 +15,13 @@
       </ng-template>
       <ng-template pTemplate="body" let-recipe>
         <tr>
-          <td>{{recipe.title}}</td>
+          <td><a [routerLink]="['/menuitem', recipe.id]" [queryParams]="{ ro: 1 }">{{recipe.title}}</a></td>
           <td>{{recipe.description}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.category}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.effort}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.category | removePrefix}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.effort | removePrefix}}</td>
           <td class="d-none d-md-table-cell">{{recipe.tags}}</td>
-          <td class="d-none d-lg-table-cell">{{recipe.created_at}}</td>
-          <td class="d-none d-lg-table-cell">{{recipe.updated_at}}</td>
+          <td class="d-none d-lg-table-cell">{{recipe.created_at | date:'dd.MM.yy'}}</td>
+          <td class="d-none d-lg-table-cell">{{recipe.updated_at | date:'dd.MM.yy'}}</td>
         </tr>
       </ng-template>
     </p-table>
