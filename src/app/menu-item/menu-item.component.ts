@@ -5,6 +5,7 @@ import {AuthService} from '../core/auth.service';
 import {BackendService} from '../core/backend.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Message} from 'primeng/api';
+import {forkJoin, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-menu-item',
@@ -17,6 +18,10 @@ export class MenuItemComponent implements OnInit {
   recipeId: string;
   createdAt: Date;
   updatedAt: Date;
+
+  categories: string[];
+  effortValues: string[];
+  tagValues: string[];
 
   recipe: MenuItem;
 
@@ -34,11 +39,25 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  get title() { return this.recipeForm.get('title'); }
-  get description() { return this.recipeForm.get('description'); }
-  get category() { return this.recipeForm.get('category'); }
-  get effort() { return this.recipeForm.get('effort'); }
-  get tags() { return this.recipeForm.get('tags'); }
+  get title() {
+    return this.recipeForm.get('title');
+  }
+
+  get description() {
+    return this.recipeForm.get('description');
+  }
+
+  get category() {
+    return this.recipeForm.get('category');
+  }
+
+  get effort() {
+    return this.recipeForm.get('effort');
+  }
+
+  get tags() {
+    return this.recipeForm.get('tags');
+  }
 
   ngOnInit(): void {
     // console.log('paramMap: ' + JSON.stringify(this.route.snapshot.paramMap));
@@ -57,11 +76,24 @@ export class MenuItemComponent implements OnInit {
       image3: [null],
     });
 
-    if (this.recipeId !== 'new') {
-      this.backendService.getRecipe(Number(this.recipeId)).subscribe((res) => {
-          const rec: MenuItem = res;
-          console.log(JSON.stringify(rec));
+    forkJoin({
+      cats: this.backendService.getCategories(),
+      effs: this.backendService.getEffortValues(),
+      tags: this.backendService.getTags(),
+      rcps: this.getRecipes()
+    })
+      .subscribe(({cats, effs, tags, rcps}) => {
+        this.categories = cats;
+        this.effortValues = effs;
+        this.tagValues = tags;
+        console.log('got categories: ' + JSON.stringify(cats));
+        console.log('got effortValues: ' + JSON.stringify(effs));
+        console.log('got tagValues: ' + JSON.stringify(tags));
 
+        const rec: MenuItem = rcps;
+        console.log(JSON.stringify(rec));
+
+        if (rec !== null) {
           this.createdAt = rec.created_at;
           this.updatedAt = rec.updated_at;
 
@@ -76,18 +108,18 @@ export class MenuItemComponent implements OnInit {
             image2: null,
             image3: null,
           });
-        },
-        error => {
-          console.log('getRecipe error: ' + JSON.stringify(error));
-          this.msgs.push({
-            severity: 'error', summary: 'Error while loading recipe: ',
-            detail: 'Are you offline?'
-          });
-          this.authService.logOut();
         }
-      );
+      }, error => {
+        console.log('get categories/effortValues/tagValues/recipe error: ' + JSON.stringify(error));
+        this.authService.logOut();
+      });
+  }
+
+  public getRecipes(): Observable<any> {
+    if (this.recipeId !== 'new') {
+      return this.backendService.getRecipe(Number(this.recipeId));
     } else {
-      // is new...
+      return of(null)
     }
   }
 

@@ -1,6 +1,4 @@
-<p xmlns="http://www.w3.org/1999/html">menu-item {{ recipeId }}</p>
-<div><pre>{{ recipe | json }}</pre></div>
-
+<p></p>
 <div class="p-inputtext-sm">
   <form [formGroup]="recipeForm" (ngSubmit)="save()">
 
@@ -34,9 +32,11 @@
              [attr.disabled]="readonly ? 'disabled' : null" />
     </div>
 
-    <div>
-      recipe-id: {{ recipeId }}<br/>
-      created: {{createdAt | date:'dd.MM.yy'}} - last updated: {{updatedAt | date:'dd.MM.yy'}}
+    <div *ngIf="!isNew()">
+      <small>
+        recipe-id: {{ recipeId }}<br/>
+        created: {{createdAt | date:'dd.MM.yy'}} - last updated: {{updatedAt | date:'dd.MM.yy'}}
+      </small>
     </div>
 
     <p-messages [(value)]="msgs"></p-messages>

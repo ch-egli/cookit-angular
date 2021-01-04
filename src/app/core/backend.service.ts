@@ -46,6 +46,21 @@ export class BackendService {
     return this.http.post<any>(this.baseUrl + 'recipes', recipe, {headers: authHeaders, responseType: 'json'});
   }
 
+  getCategories(): Observable<string[]> {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.get<string[]>(this.baseUrl + 'categories', {headers: authHeaders, responseType: 'json'})
+  }
+
+  getEffortValues(): Observable<string[]> {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.get<string[]>(this.baseUrl + 'effort-values', {headers: authHeaders, responseType: 'json'})
+  }
+
+  getTags(): Observable<string[]> {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.get<string[]>(this.baseUrl + 'tags', {headers: authHeaders, responseType: 'json'})
+  }
+
 
   /*
      getAthletes(): Observable<string[]> {
