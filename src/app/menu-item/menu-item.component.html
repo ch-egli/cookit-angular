@@ -33,6 +33,10 @@
       <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'" [disabled]="readonly"></p-multiSelect>
     </div>
 
+    <img name="image1" style="max-width:640px;width:auto" src="{{image1}}">
+    <img name="image2" style="max-width:640px;width:auto" src="{{image2}}">
+    <img name="image3" style="max-width:640px;width:auto" src="{{image3}}">
+
     <div *ngIf="!isNew()">
       <small>
         recipe-id: {{ recipeId }}<br/>

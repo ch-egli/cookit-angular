@@ -16,6 +16,13 @@ import {forkJoin, Observable, of} from 'rxjs';
 export class MenuItemComponent implements OnInit {
 
   recipeId: string;
+  image1: any;
+  image2: any;
+  image3: any;
+  reader1 = new FileReader();
+  reader2 = new FileReader();
+  reader3 = new FileReader();
+
   createdAt: Date;
   updatedAt: Date;
 
@@ -117,6 +124,7 @@ export class MenuItemComponent implements OnInit {
             image2: null,
             image3: null,
           });
+          this.getImages(rec);
         }
       }, error => {
         console.log('get categories/effortValues/tagValues/recipe error: ' + JSON.stringify(error));
@@ -177,6 +185,59 @@ export class MenuItemComponent implements OnInit {
           this.authService.logOut();
         }
       );
+    }
+  }
+
+  public getImages(recipe: any) {
+    if (recipe.image1 !== null) {
+      this.backendService.getImage(Number(this.recipeId), 1).subscribe(data => {
+          this.image1 = this.createImageFromBlob(data, this.reader1, 1);
+        }
+      ), error => {
+        console.log('get image1 failed: ' + JSON.stringify(error));
+        this.authService.logOut();
+      }
+    }
+    if (recipe.image2 !== null) {
+      this.backendService.getImage(Number(this.recipeId), 2).subscribe(data => {
+          this.image2 = this.createImageFromBlob(data, this.reader2,2);
+        }
+      ), error => {
+        console.log('get image2 failed: ' + JSON.stringify(error));
+        this.authService.logOut();
+      }
+    }
+    if (recipe.image3 !== null) {
+      this.backendService.getImage(Number(this.recipeId), 3).subscribe(data => {
+          this.image3 = this.createImageFromBlob(data, this.reader3, 3);
+        }
+      ), error => {
+        console.log('get image3 failed: ' + JSON.stringify(error));
+        this.authService.logOut();
+      }
+    }
+  }
+
+  public createImageFromBlob(image: Blob, reader: FileReader, imageNumber: number) {
+    reader.addEventListener("load", () => {
+      switch (imageNumber) {
+        case 1:
+          this.image1 = reader.result;
+          break;
+        case 2:
+          this.image2 = reader.result;
+          break;
+        case 3:
+          this.image3 = reader.result;
+          break;
+        default:
+          console.log("invalid image number")
+          break;
+      }
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
     }
   }
 

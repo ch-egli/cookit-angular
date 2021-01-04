@@ -31,9 +31,14 @@ export class BackendService {
   }
 
   getRecipe(id: number): Observable<MenuItem> {
-    //console.log('getRecipes - id token: ' + this.authService.getIdToken())
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
     return this.http.get<MenuItem>(this.baseUrl + 'recipes/' + id, {headers: authHeaders, responseType: 'json'})
+  }
+
+  getImage(recipeId: number, imageId: number): Observable<Blob> {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    console.log('url: ' + this.baseUrl + 'recipes/' + recipeId + '/img/' + imageId);
+    return this.http.get<Blob>(this.baseUrl + 'recipes/' + recipeId + '/img/' + imageId, {headers: authHeaders, responseType: 'blob' as 'json'})
   }
 
   addRecipe(recipe: any) {
