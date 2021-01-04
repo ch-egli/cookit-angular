@@ -18,18 +18,34 @@ export class BackendService {
     //console.log('getRecipes - id token: ' + this.authService.getIdToken())
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
     return this.http.get<MenuItem[]>(this.baseUrl + 'recipes', {headers: authHeaders, responseType: 'json'})
-/*
-
-    .pipe(
-      retry(3),
-      catchError((errors) => {
-        console.log('error: ' + JSON.stringify(errors));
-        return EMPTY;
-      }),
-      shareReplay()
-    );
-*/
+    /*
+        .pipe(
+          retry(3),
+          catchError((errors) => {
+            console.log('error: ' + JSON.stringify(errors));
+            return EMPTY;
+          }),
+          shareReplay()
+        );
+    */
   }
+
+  getRecipe(id: number): Observable<MenuItem> {
+    //console.log('getRecipes - id token: ' + this.authService.getIdToken())
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.get<MenuItem>(this.baseUrl + 'recipes/' + id, {headers: authHeaders, responseType: 'json'})
+  }
+
+  addRecipe(recipe: any) {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.post<any>(this.baseUrl + 'recipes', recipe, {headers: authHeaders, responseType: 'json'});
+  }
+
+  changeRecipe(recipe: any) {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.post<any>(this.baseUrl + 'recipes', recipe, {headers: authHeaders, responseType: 'json'});
+  }
+
 
   /*
      getAthletes(): Observable<string[]> {

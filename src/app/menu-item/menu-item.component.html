@@ -1,1 +1,56 @@
-<p>menu-item {{ menuId }}</p>
+<p xmlns="http://www.w3.org/1999/html">menu-item {{ recipeId }}</p>
+<div><pre>{{ recipe | json }}</pre></div>
+
+<div class="p-inputtext-sm">
+  <form [formGroup]="recipeForm" (ngSubmit)="save()">
+
+    <div class="form-group">
+      <div for="title">Title</div>
+      <input pInputText type="text" formControlName="title" name="title" class="ui-inputtext"
+             [attr.disabled]="readonly ? 'disabled' : null" />
+    </div>
+
+    <div class="form-group">
+      <div for="description">Description</div>
+      <textarea pInputTextarea [rows]="5" formControlName="description" name="description" class="ui-inputtext"
+                [attr.disabled]="readonly ? 'disabled' : null"></textarea>
+    </div>
+
+    <div class="form-group">
+      <div for="category">Category</div>
+      <input pInputText type="text" formControlName="category" name="category" class="ui-inputtext"
+             [attr.disabled]="readonly ? 'disabled' : null" />
+    </div>
+
+    <div class="form-group">
+      <div for="effort">Effort</div>
+      <input pInputText type="text" formControlName="effort" name="effort" class="ui-inputtext"
+             [attr.disabled]="readonly ? 'disabled' : null" />
+    </div>
+
+    <div class="form-group">
+      <div for="tags">Tags</div>
+      <input pInputText type="text" formControlName="tags" name="tags" class="ui-inputtext"
+             [attr.disabled]="readonly ? 'disabled' : null" />
+    </div>
+
+    <div>
+      recipe-id: {{ recipeId }}<br/>
+      created: {{createdAt | date:'dd.MM.yy'}} - last updated: {{updatedAt | date:'dd.MM.yy'}}
+    </div>
+
+    <p-messages [(value)]="msgs"></p-messages>
+
+    <div class="form-buttons" style="padding-bottom:2rem">
+      <button pButton type="submit" [disabled]="!recipeForm.valid" style="margin-top: 1.0em;" class="ui-button-primary"
+              label="Save" *ngIf="!readonly"></button>
+      <button pButton type="button" style="margin-top: 1.0em;" class="ui-button-primary" (click)="cancel()"
+              label="Back" *ngIf="readonly"></button>
+      <button pButton type="button" style="margin-top: 1.0rem; margin-left: 0.4rem" class="ui-button-secondary"
+              (click)="cancel()" label="Cancel" *ngIf="!readonly"></button>
+    </div>
+
+  </form>
+</div>
+
+

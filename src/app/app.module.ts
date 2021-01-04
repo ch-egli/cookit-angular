@@ -16,6 +16,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MenubarModule } from 'primeng/menubar';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from './shared/shared.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -36,9 +42,45 @@ import { SharedModule } from './shared/shared.module';
       },
     }),
     SharedModule,
+    AppRoutingModule,
+    CommonModule,
     MenubarModule,
     TableModule,
-    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MessagesModule,
+    MessageModule,
+    CalendarModule,
+    InputTextareaModule,
+/*
+    ButtonModule,
+    RadioButtonModule,
+    ToggleButtonModule,
+    SelectButtonModule,
+    InputMaskModule,
+    DropdownModule,
+    AccordionModule,
+    FieldsetModule,
+    DataTableModule,
+    GrowlModule,
+    PanelModule,
+    CheckboxModule,
+    InputSwitchModule,
+    SpinnerModule,
+    InputTextModule,
+    ListboxModule,
+    MultiSelectModule,
+    SliderModule,
+    PaginatorModule,
+    TabViewModule,
+    ConfirmDialogModule,
+    StepsModule,
+    ProgressBarModule,
+    ChartsModule,
+    TabMenuModule,
+    OverlayPanelModule,
+    RatingModule
+*/
   ],
   providers: [SBB_ICON_REGISTRY_PROVIDER],
   bootstrap: [AppComponent],

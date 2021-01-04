@@ -27,16 +27,6 @@ export class NavComponent implements OnInit {
         routerLink: ['/menuitem/new']
       },
       {
-        label:'Menu 1',
-        icon:'pi pi-fw pi-file',
-        routerLink: ['/menuitem/1']
-      },
-      {
-        label:'Menu 2',
-        icon:'pi pi-fw pi-file',
-        routerLink: ['/menuitem/2']
-      },
-      {
         label:'Logout',
         icon:'pi pi-fw pi-power-off',
         routerLink: ['/'],

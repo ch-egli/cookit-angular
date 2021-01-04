@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RemovePrefixPipe } from './remove-prefix.pipe';
+import {TruncatePipe} from './truncate.pipe';
 
 @NgModule({
-  declarations: [RemovePrefixPipe],
+  declarations: [RemovePrefixPipe, TruncatePipe],
   imports: [
     CommonModule
   ],
-  exports: [RemovePrefixPipe]
+  exports: [RemovePrefixPipe, TruncatePipe]
 })
 export class SharedModule { }

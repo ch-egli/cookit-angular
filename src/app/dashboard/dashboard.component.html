@@ -16,7 +16,7 @@
       <ng-template pTemplate="body" let-recipe>
         <tr>
           <td><a [routerLink]="['/menuitem', recipe.id]" [queryParams]="{ ro: 1 }">{{recipe.title}}</a></td>
-          <td>{{recipe.description}}</td>
+          <td>{{recipe.description | truncate:[20, '...']}}</td>
           <td class="d-none d-md-table-cell">{{recipe.category | removePrefix}}</td>
           <td class="d-none d-md-table-cell">{{recipe.effort | removePrefix}}</td>
           <td class="d-none d-md-table-cell">{{recipe.tags}}</td>
@@ -28,8 +28,6 @@
   </div>
 
 </div>
-
-
 
 
 <ng-template #emptyDashboardTemplate></ng-template>
