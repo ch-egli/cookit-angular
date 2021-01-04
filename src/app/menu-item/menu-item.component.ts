@@ -4,7 +4,7 @@ import {MenuItem} from '../core/backend.models';
 import {AuthService} from '../core/auth.service';
 import {BackendService} from '../core/backend.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Message} from 'primeng/api';
+import {Message, SelectItem} from 'primeng/api';
 import {forkJoin, Observable, of} from 'rxjs';
 
 @Component({
@@ -19,13 +19,13 @@ export class MenuItemComponent implements OnInit {
   createdAt: Date;
   updatedAt: Date;
 
-  categories: string[];
-  effortValues: string[];
-  tagValues: string[];
-
   recipe: MenuItem;
 
   recipeForm: FormGroup;
+  categoryOptions: SelectItem[] = [];
+  effortOptions: SelectItem[] = [];
+  tagOptions: SelectItem[] = [];
+
   readonly = false;
 
   msgs: Message[] = [];
@@ -70,7 +70,7 @@ export class MenuItemComponent implements OnInit {
       description: [''],
       category: [''],
       effort: [''],
-      tags: [''],
+      tags: [[]],
       image1: [null],
       image2: [null],
       image3: [null],
@@ -83,27 +83,36 @@ export class MenuItemComponent implements OnInit {
       rcps: this.getRecipes()
     })
       .subscribe(({cats, effs, tags, rcps}) => {
-        this.categories = cats;
-        this.effortValues = effs;
-        this.tagValues = tags;
         console.log('got categories: ' + JSON.stringify(cats));
+        this.categoryOptions = [];
+        cats.forEach((category) => {
+          this.categoryOptions.push({ label: category, value: category });
+        });
+
         console.log('got effortValues: ' + JSON.stringify(effs));
+        this.effortOptions = [];
+        effs.forEach((effort) => {
+          this.effortOptions.push({ label: effort, value: effort });
+        });
+
         console.log('got tagValues: ' + JSON.stringify(tags));
+        this.tagOptions = [];
+        tags.forEach((tag) => {
+          this.tagOptions.push({ label: tag, value: tag });
+        });
 
         const rec: MenuItem = rcps;
-        console.log(JSON.stringify(rec));
-
+        console.log('got recipe: ' + JSON.stringify(rec));
         if (rec !== null) {
           this.createdAt = rec.created_at;
           this.updatedAt = rec.updated_at;
-
           this.recipeForm.setValue({
             id: rec.id,
             title: rec.title,
             description: rec.description,
             category: rec.category,
             effort: rec.effort,
-            tags: rec.tags,
+            tags: rec.tags.split(','),
             image1: null,
             image2: null,
             image3: null,
@@ -125,18 +134,18 @@ export class MenuItemComponent implements OnInit {
 
   public save() {
     const val = this.recipeForm.value;
-    // console.log('workoutForm values: ' + JSON.stringify(val));
-    // console.log('gefühl: ' + this.gefuehl);
+    //console.log('form value: ' + JSON.stringify(val));
 
     let recipe: any = {
       title: val.title,
       description: val.description,
       category: val.category,
       effort: val.effort,
-      tags: val.tags
+      tags: val.tags.join(',')
     };
 
     if (this.recipeId === 'new') {
+      console.log('submitted recipe (new): ' + JSON.stringify(recipe));
       this.backendService.addRecipe(recipe).subscribe(
         data1 => {
           console.log('recipe successfully added: ' + JSON.stringify(data1));
@@ -153,6 +162,7 @@ export class MenuItemComponent implements OnInit {
       );
     } else {
       recipe.id = this.recipeId;
+      console.log('submitted recipe (update): ' + JSON.stringify(recipe));
       this.backendService.changeRecipe(recipe).subscribe(
         data => {
           console.log('recipe successfully changed: ' + JSON.stringify(data));

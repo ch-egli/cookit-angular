@@ -1,5 +1,5 @@
 <p></p>
-<div class="p-inputtext-sm">
+<div>
   <form [formGroup]="recipeForm" (ngSubmit)="save()">
 
     <div class="form-group">
@@ -16,20 +16,21 @@
 
     <div class="form-group">
       <div for="category">Category</div>
-      <input pInputText type="text" formControlName="category" name="category" class="ui-inputtext"
-             [attr.disabled]="readonly ? 'disabled' : null" />
+      <p-dropdown [options]="categoryOptions" formControlName="category" name="category"
+                  [styleClass]="'dd-width'" [disabled]="readonly">
+      </p-dropdown>
     </div>
 
     <div class="form-group">
       <div for="effort">Effort</div>
-      <input pInputText type="text" formControlName="effort" name="effort" class="ui-inputtext"
-             [attr.disabled]="readonly ? 'disabled' : null" />
+      <p-dropdown [options]="effortOptions" formControlName="effort" name="effort"
+                  [styleClass]="'dd-width'" [disabled]="readonly">
+      </p-dropdown>
     </div>
 
     <div class="form-group">
       <div for="tags">Tags</div>
-      <input pInputText type="text" formControlName="tags" name="tags" class="ui-inputtext"
-             [attr.disabled]="readonly ? 'disabled' : null" />
+      <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'" [disabled]="readonly"></p-multiSelect>
     </div>
 
     <div *ngIf="!isNew()">

@@ -22,6 +22,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -52,13 +54,14 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     MessageModule,
     CalendarModule,
     InputTextareaModule,
+    DropdownModule,
+    MultiSelectModule,
 /*
     ButtonModule,
     RadioButtonModule,
     ToggleButtonModule,
     SelectButtonModule,
     InputMaskModule,
-    DropdownModule,
     AccordionModule,
     FieldsetModule,
     DataTableModule,
@@ -69,7 +72,6 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     SpinnerModule,
     InputTextModule,
     ListboxModule,
-    MultiSelectModule,
     SliderModule,
     PaginatorModule,
     TabViewModule,
