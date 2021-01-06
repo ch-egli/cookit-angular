@@ -41,20 +41,22 @@ export class BackendService {
   }
 
   addRecipe(recipe: any) {
-    let formData = this.convertToFormData(recipe);
+    let formData = this.convertToFormData(recipe, true);
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
     return this.http.post<any>(this.baseUrl + 'recipes', formData, {headers: authHeaders, responseType: 'json'});
   }
 
   changeRecipe(recipe: any) {
-    let formData = this.convertToFormData(recipe);
+    let formData = this.convertToFormData(recipe, false);
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
     return this.http.post<any>(this.baseUrl + 'recipes', formData, {headers: authHeaders, responseType: 'json'});
   }
 
-  convertToFormData(recipe: any): any {
+  convertToFormData(recipe: any, isNew: boolean): any {
     let formData = new FormData();
-    formData.append('id', recipe.id);
+    if (!isNew) {
+      formData.append('id', recipe.id);
+    }
     formData.append('title', recipe.title);
     formData.append('description', recipe.description);
     formData.append('category', recipe.category);
