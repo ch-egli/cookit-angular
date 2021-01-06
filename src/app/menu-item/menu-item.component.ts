@@ -160,7 +160,7 @@ export class MenuItemComponent implements OnInit {
       this.backendService.addRecipe(recipe).subscribe(
         data1 => {
           console.log('recipe successfully added: ' + JSON.stringify(data1));
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']).then(() => {});
         },
         error => {
           console.log('addRecipe error: ' + JSON.stringify(error));
@@ -177,7 +177,7 @@ export class MenuItemComponent implements OnInit {
       this.backendService.changeRecipe(recipe).subscribe(
         data => {
           console.log('recipe successfully changed: ' + JSON.stringify(data));
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']).then(() => {});
         },
         error => {
           console.log('changeWorkout error: ' + error);
