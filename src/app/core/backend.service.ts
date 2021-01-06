@@ -15,7 +15,6 @@ export class BackendService {
   }
 
   getRecipes(): Observable<MenuItem[]> {
-    //console.log('getRecipes - id token: ' + this.authService.getIdToken())
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
     return this.http.get<MenuItem[]>(this.baseUrl + 'recipes', {headers: authHeaders, responseType: 'json'})
     /*
@@ -42,13 +41,29 @@ export class BackendService {
   }
 
   addRecipe(recipe: any) {
+    let formData = this.convertToFormData(recipe);
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
-    return this.http.post<any>(this.baseUrl + 'recipes', recipe, {headers: authHeaders, responseType: 'json'});
+    return this.http.post<any>(this.baseUrl + 'recipes', formData, {headers: authHeaders, responseType: 'json'});
   }
 
   changeRecipe(recipe: any) {
+    let formData = this.convertToFormData(recipe);
     const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
-    return this.http.post<any>(this.baseUrl + 'recipes', recipe, {headers: authHeaders, responseType: 'json'});
+    return this.http.post<any>(this.baseUrl + 'recipes', formData, {headers: authHeaders, responseType: 'json'});
+  }
+
+  convertToFormData(recipe: any): any {
+    let formData = new FormData();
+    formData.append('id', recipe.id);
+    formData.append('title', recipe.title);
+    formData.append('description', recipe.description);
+    formData.append('category', recipe.category);
+    formData.append('effort', recipe.effort);
+    formData.append('tags', recipe.tags);
+    formData.append('image1', recipe.image1);
+    formData.append('image2', recipe.image2);
+    formData.append('image3', recipe.image3);
+    return formData;
   }
 
   getCategories(): Observable<string[]> {

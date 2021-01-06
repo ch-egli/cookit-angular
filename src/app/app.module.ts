@@ -21,9 +21,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {DropdownModule} from 'primeng/dropdown';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -56,6 +57,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputTextareaModule,
     DropdownModule,
     MultiSelectModule,
+    FileUploadModule,
 /*
     ButtonModule,
     RadioButtonModule,
