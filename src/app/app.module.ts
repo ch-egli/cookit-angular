@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SbbButtonModule } from '@sbb-esta/angular-business/button';
 import { SbbLinksModule } from '@sbb-esta/angular-business/links';
-import { SBB_ICON_REGISTRY_PROVIDER } from '@sbb-esta/angular-core/icon';
+import {SBB_ICON_REGISTRY_PROVIDER, SbbIconModule} from '@sbb-esta/angular-core/icon';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -58,33 +58,34 @@ import { FileUploadModule } from 'primeng/fileupload';
     DropdownModule,
     MultiSelectModule,
     FileUploadModule,
-/*
-    ButtonModule,
-    RadioButtonModule,
-    ToggleButtonModule,
-    SelectButtonModule,
-    InputMaskModule,
-    AccordionModule,
-    FieldsetModule,
-    DataTableModule,
-    GrowlModule,
-    PanelModule,
-    CheckboxModule,
-    InputSwitchModule,
-    SpinnerModule,
-    InputTextModule,
-    ListboxModule,
-    SliderModule,
-    PaginatorModule,
-    TabViewModule,
-    ConfirmDialogModule,
-    StepsModule,
-    ProgressBarModule,
-    ChartsModule,
-    TabMenuModule,
-    OverlayPanelModule,
-    RatingModule
-*/
+    SbbIconModule,
+    /*
+        ButtonModule,
+        RadioButtonModule,
+        ToggleButtonModule,
+        SelectButtonModule,
+        InputMaskModule,
+        AccordionModule,
+        FieldsetModule,
+        DataTableModule,
+        GrowlModule,
+        PanelModule,
+        CheckboxModule,
+        InputSwitchModule,
+        SpinnerModule,
+        InputTextModule,
+        ListboxModule,
+        SliderModule,
+        PaginatorModule,
+        TabViewModule,
+        ConfirmDialogModule,
+        StepsModule,
+        ProgressBarModule,
+        ChartsModule,
+        TabMenuModule,
+        OverlayPanelModule,
+        RatingModule
+    */
   ],
   providers: [SBB_ICON_REGISTRY_PROVIDER],
   bootstrap: [AppComponent],

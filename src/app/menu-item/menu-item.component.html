@@ -27,33 +27,49 @@
       <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'"></p-multiSelect>
     </div>
 
-    <div name="image1" class="imagePreview">
-      <img [src]="imageUrl1" style="max-width:640px;width:auto" *ngIf="imageUrl1 && imageUrl1 !== ''">
-      <p-button  pRipple type="button" icon="pi pi-times" (onClick)="cancelPreview1($event)" class="p-button-rounded p-button-danger" *ngIf="imageUrl1 && imageUrl1 !== ''"></p-button>
-      <input type="file" accept="image/*" (change)="showPreview1($event)" />
-    </div>
-    <div name="image2" class="imagePreview">
-      <img [src]="imageUrl2" style="max-width:640px;width:auto" *ngIf="imageUrl2 && imageUrl2 !== ''" >
-      <p-button  pRipple type="button" icon="pi pi-times" (onClick)="cancelPreview2($event)" class="p-button-rounded p-button-danger" *ngIf="imageUrl2 && imageUrl2 !== ''"></p-button>
-      <input type="file" accept="image/*" (change)="showPreview2($event)" />
-    </div>
-    <div name="image3" class="imagePreview" >
-      <img [src]="imageUrl3" style="max-width:640px;width:auto" *ngIf="imageUrl3 && imageUrl3 !== ''" >
-      <p-button  pRipple type="button" icon="pi pi-times" (onClick)="cancelPreview3($event)" class="p-button-rounded p-button-danger" *ngIf="imageUrl3 && imageUrl3 !== ''"></p-button>
-      <input type="file" accept="image/*" (change)="showPreview3($event)" />
+    <div>
+      <div class="img-wrp">
+        <img [src]="imageUrl1" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage1()" (click)="selectFile1.click()">
+        <label for="image1" class="custom-file-upload-label" *ngIf="!hasImage1()">Add image...</label>
+        <input id="image1" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview1($event)" #selectFile1/>
+        <button sbbButton type="button" mode="icon" (click)="cancelPreview1($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage1()">
+          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+        </button>
+      </div>
     </div>
 
+    <div *ngIf="hasImage1()">
+    <div class="img-wrp">
+      <img [src]="imageUrl2" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage2()" (click)="selectFile2.click()">
+      <label for="image2" class="custom-file-upload-label" *ngIf="!hasImage2()">Add image...</label>
+      <input id="image2" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview2($event)" #selectFile2/>
+      <button sbbButton type="button" mode="icon" (click)="cancelPreview2($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage2()">
+        <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+      </button>
+    </div>
+    </div>
+
+    <div *ngIf="hasImage2()">
+      <div class="img-wrp" *ngIf="hasImage2()">
+        <img [src]="imageUrl3" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage3()" (click)="selectFile3.click()">
+        <label for="image3" class="custom-file-upload-label" *ngIf="!hasImage3()">Add image...</label>
+        <input id="image3" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview3($event)" #selectFile3/>
+        <button sbbButton type="button" mode="icon" (click)="cancelPreview3($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage3()">
+          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+        </button>
+      </div>
+    </div>
+
+
     <div *ngIf="!isNew()">
-      <small style="float:right">recipe-id: {{ recipeId }}</small><br/>
       <small style="float:right">last updated: {{updatedAt}}</small>
     </div>
 
     <p-messages [(value)]="msgs"></p-messages>
 
     <div class="form-buttons" style="padding-bottom:2rem">
-      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!readonly">Save</button>
-      <button sbbButton type="submit" [disabled]="!recipeForm.valid" (click)="cancel()" *ngIf="readonly">Cancel</button>
-      <button sbbButton type="submit" [disabled]="!recipeForm.valid" (click)="cancel()" *ngIf="!readonly">Cancel</button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!readonly" style="margin-right:0.5em;">Save</button>
+      <button sbbButton type="button" [disabled]="!recipeForm.valid" (click)="cancel()">Cancel</button>
     </div>
 
   </form>

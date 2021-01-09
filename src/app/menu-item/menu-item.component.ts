@@ -288,9 +288,9 @@ export class MenuItemComponent implements OnInit {
   }
 
   cancelPreview2(event) {
-    this.recipeForm.patchValue({image1: null});
-    this.recipeForm.get('image1').updateValueAndValidity();
-    this.imageUrl1 = null;
+    this.recipeForm.patchValue({image2: null});
+    this.recipeForm.get('image2').updateValueAndValidity();
+    this.imageUrl2 = null;
   }
 
   showPreview3(event) {
@@ -307,9 +307,21 @@ export class MenuItemComponent implements OnInit {
   }
 
   cancelPreview3(event) {
-    this.recipeForm.patchValue({image1: null});
-    this.recipeForm.get('image1').updateValueAndValidity();
-    this.imageUrl1 = null;
+    this.recipeForm.patchValue({image3: null});
+    this.recipeForm.get('image3').updateValueAndValidity();
+    this.imageUrl3 = null;
+  }
+
+  hasImage1() {
+    return this.imageUrl1 && this.imageUrl1 !== '';
+  }
+
+  hasImage2() {
+    return this.imageUrl2 && this.imageUrl2 !== '';
+  }
+
+  hasImage3() {
+    return this.imageUrl3 && this.imageUrl3 !== '';
   }
 
 }
