@@ -1,4 +1,3 @@
-import { SBB_SSO_IDP_HINT_AZURE_AD, SBB_SSO_INT_ISSUER_URL } from '@sbb-esta/angular-core/oauth';
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 import { Environment } from './environment.model';
@@ -16,7 +15,7 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile email',
 
   showDebugInformation: true,
-  sessionChecksEnabled: true
+  // sessionChecksEnabled: true
 };
 
 export const environment: Environment = {

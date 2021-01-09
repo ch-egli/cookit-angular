@@ -4,41 +4,28 @@
 
     <div class="form-group">
       <div for="title">Title</div>
-      <input pInputText type="text" formControlName="title" name="title" class="ui-inputtext"
-             [attr.disabled]="readonly ? 'disabled' : null" />
+      <input pInputText type="text" formControlName="title" name="title" class="ui-inputtext"/>
     </div>
 
     <div class="form-group">
       <div for="description">Description</div>
-      <textarea pInputTextarea [rows]="5" formControlName="description" name="description" class="ui-inputtext"
-                [attr.disabled]="readonly ? 'disabled' : null"></textarea>
+      <textarea pInputTextarea [rows]="5" formControlName="description" name="description" class="ui-inputtext"></textarea>
     </div>
 
     <div class="form-group">
       <div for="category">Category</div>
-      <p-dropdown [options]="categoryOptions" formControlName="category" name="category"
-                  [styleClass]="'dd-width'" [disabled]="readonly">
-      </p-dropdown>
+      <p-dropdown [options]="categoryOptions" formControlName="category" name="category" [styleClass]="'dd-width'"></p-dropdown>
     </div>
 
     <div class="form-group">
       <div for="effort">Effort</div>
-      <p-dropdown [options]="effortOptions" formControlName="effort" name="effort"
-                  [styleClass]="'dd-width'" [disabled]="readonly">
-      </p-dropdown>
+      <p-dropdown [options]="effortOptions" formControlName="effort" name="effort" [styleClass]="'dd-width'"></p-dropdown>
     </div>
 
     <div class="form-group">
       <div for="tags">Tags</div>
-      <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'" [disabled]="readonly"></p-multiSelect>
+      <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'"></p-multiSelect>
     </div>
-
-<!--
-    <div name="image1" class="imagePreview">
-      <img [src]="imageUrl1" *ngIf="imageUrl1 && imageUrl1 !== ''" >
-      <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="showPreview1($event)"></p-fileUpload>
-    </div>
--->
 
     <div name="image1" class="imagePreview">
       <img [src]="imageUrl1" style="max-width:640px;width:auto" *ngIf="imageUrl1 && imageUrl1 !== ''">
@@ -57,21 +44,16 @@
     </div>
 
     <div *ngIf="!isNew()">
-      <small>
-        recipe-id: {{ recipeId }}<br/>
-        created: {{createdAt}} - last updated: {{updatedAt}}
-      </small>
+      <small style="float:right">recipe-id: {{ recipeId }}</small><br/>
+      <small style="float:right">last updated: {{updatedAt}}</small>
     </div>
 
     <p-messages [(value)]="msgs"></p-messages>
 
     <div class="form-buttons" style="padding-bottom:2rem">
-      <button pButton type="submit" [disabled]="!recipeForm.valid" style="margin-top: 1.0em;" class="ui-button-primary"
-              label="Save" *ngIf="!readonly"></button>
-      <button pButton type="button" style="margin-top: 1.0em;" class="ui-button-primary" (click)="cancel()"
-              label="Back" *ngIf="readonly"></button>
-      <button pButton type="button" style="margin-top: 1.0rem; margin-left: 0.4rem" class="ui-button-secondary"
-              (click)="cancel()" label="Cancel" *ngIf="!readonly"></button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!readonly">Save</button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" (click)="cancel()" *ngIf="readonly">Cancel</button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" (click)="cancel()" *ngIf="!readonly">Cancel</button>
     </div>
 
   </form>

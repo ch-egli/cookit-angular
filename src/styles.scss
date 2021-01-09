@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+a {
+  // $sbbColorRed: #eb0000;
+  // $sbbColorRed125: #c60018;
+  // $sbbColorRed150: #a20013;
+  color: #a20013 !important;
+}
+
 .ui-inputtext {
   padding: .1em;
   width: 100%;

@@ -72,16 +72,15 @@ export class MenuItemComponent implements OnInit {
     this.recipeId = this.route.snapshot.paramMap.get('mi');
 
     this.recipeForm = this.fb.group({
-      // initial values do not work, therefore they are initialized as variables...
-      id: [''],
-      title: ['', Validators.required],
-      description: [''],
-      category: ['main'],
-      effort: ['medium'],
-      tags: [[]],
-      image1: [null],
-      image2: [null],
-      image3: [null],
+      id: [{value: '', disabled: this.readonly}],
+      title: [{value: '', disabled: this.readonly}, Validators.required],
+      description: [{value: '', disabled: this.readonly}],
+      category: [{value: 'main', disabled: this.readonly}],
+      effort: [{value: 'medium', disabled: this.readonly}],
+      tags: [{value: [], disabled: this.readonly}],
+      image1: {value: null, disabled: this.readonly},
+      image2: {value: null, disabled: this.readonly},
+      image3: {value: null, disabled: this.readonly},
     });
 
     forkJoin({
