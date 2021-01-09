@@ -42,7 +42,8 @@ export class MenuItemComponent implements OnInit {
               private router: Router, private fb: FormBuilder) {
     route.params.subscribe(val => {
       // console.log('route activated: ' + JSON.stringify(val));
-      this.ngOnInit();
+      // does not seem necessary...
+      // this.ngOnInit();
     });
   }
 
@@ -75,8 +76,8 @@ export class MenuItemComponent implements OnInit {
       id: [''],
       title: ['', Validators.required],
       description: [''],
-      category: [''],
-      effort: [''],
+      category: ['main'],
+      effort: ['medium'],
       tags: [[]],
       image1: [null],
       image2: [null],
@@ -87,7 +88,7 @@ export class MenuItemComponent implements OnInit {
       cats: this.backendService.getCategories(),
       effs: this.backendService.getEffortValues(),
       tags: this.backendService.getTags(),
-      rcps: this.getRecipes()
+      rcps: this.getRecipe()
     })
       .subscribe(({cats, effs, tags, rcps}) => {
         console.log('got categories: ' + JSON.stringify(cats));
@@ -119,7 +120,7 @@ export class MenuItemComponent implements OnInit {
             description: rec.description,
             category: rec.category,
             effort: rec.effort,
-            tags: rec.tags.split(','),
+            tags: rec.tags == null ? "" : rec.tags.split(','),
             image1: rec.image1,
             image2: rec.image2,
             image3: rec.image3,
@@ -132,7 +133,7 @@ export class MenuItemComponent implements OnInit {
       });
   }
 
-  public getRecipes(): Observable<any> {
+  public getRecipe(): Observable<any> {
     if (this.recipeId !== 'new') {
       return this.backendService.getRecipe(Number(this.recipeId));
     } else {
@@ -194,6 +195,7 @@ export class MenuItemComponent implements OnInit {
   public getImages(recipe: any) {
     if (recipe.image1 !== null) {
       this.backendService.getImage(Number(this.recipeId), 1).subscribe(data => {
+          this.recipeForm.patchValue({image1: data});
           this.imageUrl1 = this.createImageFromBlob(data, this.reader1, 1);
         }
       ), error => {
@@ -203,6 +205,7 @@ export class MenuItemComponent implements OnInit {
     }
     if (recipe.image2 !== null) {
       this.backendService.getImage(Number(this.recipeId), 2).subscribe(data => {
+          this.recipeForm.patchValue({image2: data});
           this.imageUrl2 = this.createImageFromBlob(data, this.reader2, 2);
         }
       ), error => {
@@ -212,6 +215,7 @@ export class MenuItemComponent implements OnInit {
     }
     if (recipe.image3 !== null) {
       this.backendService.getImage(Number(this.recipeId), 3).subscribe(data => {
+          this.recipeForm.patchValue({image2: data});
           this.imageUrl3 = this.createImageFromBlob(data, this.reader3, 3);
         }
       ), error => {

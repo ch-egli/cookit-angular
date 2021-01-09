@@ -22,7 +22,8 @@ export class DashboardComponent implements OnInit {
   constructor(private authService: AuthService, private backendService: BackendService, private route: ActivatedRoute) {
     route.params.subscribe(val => {
       // console.log('route activated: ' + JSON.stringify(val));
-      this.ngOnInit();
+      // does not seem necessary...
+      // this.ngOnInit();
     });
   }
 

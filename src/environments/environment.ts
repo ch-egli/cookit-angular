@@ -23,6 +23,7 @@ export const environment: Environment = {
   production: false,
   authConfig,
   backendUrl: 'https://cookit-api.snoopfish.ch'
+  // backendUrl: 'http://localhost:8080'
 };
 
 /*
