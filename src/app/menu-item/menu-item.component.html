@@ -2,6 +2,15 @@
 <div>
   <form [formGroup]="recipeForm" (ngSubmit)="save()">
 
+    <div class="form-group" style="height:2em">
+      <button sbbButton type="button" mode="icon" (click)="setReadonly(false)" style="float:right" *ngIf="isReadonly()">
+        <sbb-icon svgIcon="kom:pen-medium" *sbbIcon></sbb-icon>
+      </button>
+      <button sbbButton type="button" mode="icon" (click)="deleteRecipe()" style="float:right">
+        <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
+      </button>
+    </div>
+
     <div class="form-group">
       <div for="title">Title</div>
       <input pInputText type="text" formControlName="title" name="title" class="ui-inputtext"/>
@@ -29,37 +38,36 @@
 
     <div>
       <div class="img-wrp">
-        <img [src]="imageUrl1" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage1()" (click)="selectFile1.click()">
-        <label for="image1" class="custom-file-upload-label" *ngIf="!hasImage1()">Add image...</label>
+        <img [src]="imageUrl1" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage1()" (click)="!isReadonly() && selectFile1.click()">
+        <label for="image1" class="custom-file-upload-label" *ngIf="!hasImage1() && !isReadonly()">Add image...</label>
         <input id="image1" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview1($event)" #selectFile1/>
-        <button sbbButton type="button" mode="icon" (click)="cancelPreview1($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage1()">
-          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+        <button sbbButton type="button" mode="icon" (click)="cancelPreview1($event)" style="position:absolute;top:0;right:0;" *ngIf="!isReadonly() && hasImage1()">
+          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
         </button>
       </div>
     </div>
 
     <div *ngIf="hasImage1()">
     <div class="img-wrp">
-      <img [src]="imageUrl2" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage2()" (click)="selectFile2.click()">
-      <label for="image2" class="custom-file-upload-label" *ngIf="!hasImage2()">Add image...</label>
+      <img [src]="imageUrl2" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage2()" (click)="!isReadonly() && selectFile2.click()">
+      <label for="image2" class="custom-file-upload-label" *ngIf="!hasImage2() && !isReadonly()">Add image...</label>
       <input id="image2" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview2($event)" #selectFile2/>
-      <button sbbButton type="button" mode="icon" (click)="cancelPreview2($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage2()">
-        <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+      <button sbbButton type="button" mode="icon" (click)="cancelPreview2($event)" style="position:absolute;top:0;right:0;" *ngIf="!isReadonly() && hasImage2()">
+        <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
       </button>
     </div>
     </div>
 
     <div *ngIf="hasImage2()">
       <div class="img-wrp" *ngIf="hasImage2()">
-        <img [src]="imageUrl3" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage3()" (click)="selectFile3.click()">
-        <label for="image3" class="custom-file-upload-label" *ngIf="!hasImage3()">Add image...</label>
+        <img [src]="imageUrl3" style="max-width:640px;width:auto" class="recipe-image" *ngIf="hasImage3()" (click)="!isReadonly() && selectFile3.click()">
+        <label for="image3" class="custom-file-upload-label" *ngIf="!hasImage3() && !isReadonly()">Add image...</label>
         <input id="image3" type="file" class="custom-file-upload" accept="image/*" (change)="showPreview3($event)" #selectFile3/>
-        <button sbbButton type="button" mode="icon" (click)="cancelPreview3($event)" style="position:absolute;top:0;right:0;" *ngIf="hasImage3()">
-          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon> <!--kom:circle-cross-medium-->
+        <button sbbButton type="button" mode="icon" (click)="cancelPreview3($event)" style="position:absolute;top:0;right:0;" *ngIf="!isReadonly() && hasImage3()">
+          <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
         </button>
       </div>
     </div>
-
 
     <div *ngIf="!isNew()">
       <small style="float:right">last updated: {{updatedAt}}</small>
@@ -68,8 +76,9 @@
     <p-messages [(value)]="msgs"></p-messages>
 
     <div class="form-buttons" style="padding-bottom:2rem">
-      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!readonly" style="margin-right:0.5em;">Save</button>
-      <button sbbButton type="button" [disabled]="!recipeForm.valid" (click)="cancel()">Cancel</button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!isReadonly()" style="margin-right:0.5em;">Save</button>
+      <button sbbButton type="button" (click)="cancel()" *ngIf="!isReadonly()">Cancel</button>
+      <button sbbButton type="button" (click)="cancel()" *ngIf="isReadonly()">Back</button>
     </div>
 
   </form>

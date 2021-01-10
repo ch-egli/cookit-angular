@@ -33,7 +33,8 @@ export class MenuItemComponent implements OnInit {
   effortOptions: SelectItem[] = [];
   tagOptions: SelectItem[] = [];
 
-  readonly = false;
+  readonly = true;
+  initialized = false;
 
   msgs: Message[] = [];
   deCH: any;
@@ -42,8 +43,7 @@ export class MenuItemComponent implements OnInit {
               private router: Router, private fb: FormBuilder) {
     route.params.subscribe(val => {
       // console.log('route activated: ' + JSON.stringify(val));
-      // does not seem necessary...
-      // this.ngOnInit();
+      this.ngOnInit();
     });
   }
 
@@ -68,68 +68,90 @@ export class MenuItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log('paramMap: ' + JSON.stringify(this.route.snapshot.paramMap));
+    if (this.initialized === false) {
+      this.initialize();
+    }
+  }
+
+  public initialize() {
+    this.initialized = true;
     this.recipeId = this.route.snapshot.paramMap.get('mi');
 
-    this.recipeForm = this.fb.group({
-      id: [{value: '', disabled: this.readonly}],
-      title: [{value: '', disabled: this.readonly}, Validators.required],
-      description: [{value: '', disabled: this.readonly}],
-      category: [{value: 'main', disabled: this.readonly}],
-      effort: [{value: 'medium', disabled: this.readonly}],
-      tags: [{value: [], disabled: this.readonly}],
-      image1: {value: null, disabled: this.readonly},
-      image2: {value: null, disabled: this.readonly},
-      image3: {value: null, disabled: this.readonly},
-    });
+    this.route.queryParamMap.subscribe(map => {
+      this.readonly = (map.get('ro') === '1');
+      console.log('### readonly: ' + this.readonly);
 
-    forkJoin({
-      cats: this.backendService.getCategories(),
-      effs: this.backendService.getEffortValues(),
-      tags: this.backendService.getTags(),
-      rcps: this.getRecipe()
-    })
-      .subscribe(({cats, effs, tags, rcps}) => {
-        console.log('got categories: ' + JSON.stringify(cats));
-        this.categoryOptions = [];
-        cats.forEach((category) => {
-          this.categoryOptions.push({label: category, value: category});
-        });
-
-        console.log('got effortValues: ' + JSON.stringify(effs));
-        this.effortOptions = [];
-        effs.forEach((effort) => {
-          this.effortOptions.push({label: effort, value: effort});
-        });
-
-        console.log('got tagValues: ' + JSON.stringify(tags));
-        this.tagOptions = [];
-        tags.forEach((tag) => {
-          this.tagOptions.push({label: tag, value: tag});
-        });
-
-        const rec: MenuItem = rcps;
-        console.log('got recipe: ' + JSON.stringify(rec));
-        if (rec !== null) {
-          this.createdAt = rec.created_at;
-          this.updatedAt = rec.updated_at;
-          this.recipeForm.setValue({
-            id: rec.id,
-            title: rec.title,
-            description: rec.description,
-            category: rec.category,
-            effort: rec.effort,
-            tags: rec.tags == null ? "" : rec.tags.split(','),
-            image1: rec.image1,
-            image2: rec.image2,
-            image3: rec.image3,
-          });
-          this.getImages(rec);
-        }
-      }, error => {
-        console.log('get categories/effortValues/tagValues/recipe error: ' + JSON.stringify(error));
-        this.authService.logOut();
+      this.recipeForm = this.fb.group({
+        id: [{value: '', disabled: this.readonly}],
+        title: [{value: '', disabled: this.readonly}, Validators.required],
+        description: [{value: '', disabled: this.readonly}],
+        category: [{value: 'main', disabled: this.readonly}],
+        effort: [{value: 'medium', disabled: this.readonly}],
+        tags: [{value: [], disabled: this.readonly}],
+        image1: {value: null, disabled: this.readonly},
+        image2: {value: null, disabled: this.readonly},
+        image3: {value: null, disabled: this.readonly},
       });
+
+      forkJoin({
+        cats: this.backendService.getCategories(),
+        effs: this.backendService.getEffortValues(),
+        tags: this.backendService.getTags(),
+        rcps: this.getRecipe()
+      })
+        .subscribe(({cats, effs, tags, rcps}) => {
+          console.log('got categories: ' + JSON.stringify(cats));
+          this.categoryOptions = [];
+          cats.forEach((category) => {
+            this.categoryOptions.push({label: category, value: category});
+          });
+
+          console.log('got effortValues: ' + JSON.stringify(effs));
+          this.effortOptions = [];
+          effs.forEach((effort) => {
+            this.effortOptions.push({label: effort, value: effort});
+          });
+
+          console.log('got tagValues: ' + JSON.stringify(tags));
+          this.tagOptions = [];
+          tags.forEach((tag) => {
+            this.tagOptions.push({label: tag, value: tag});
+          });
+
+          const rec: MenuItem = rcps;
+          console.log('got recipe: ' + JSON.stringify(rec));
+          if (rec !== null) {
+            this.createdAt = rec.created_at;
+            this.updatedAt = rec.updated_at;
+            this.recipeForm.setValue({
+              id: rec.id,
+              title: rec.title,
+              description: rec.description,
+              category: rec.category,
+              effort: rec.effort,
+              tags: rec.tags == null ? '' : rec.tags.split(','),
+              image1: rec.image1,
+              image2: rec.image2,
+              image3: rec.image3,
+            });
+
+            // enable/disable of formGroup only works after a timeout
+            // cf. https://github.com/angular/angular/issues/22556
+            if (this.readonly) {
+              this.recipeForm.disable();
+              // console.log('### recipeForm disabled');
+            } else {
+              this.recipeForm.enable();
+              // console.log('### recipeForm enabled');
+            }
+
+            this.getImages(rec);
+          }
+        }, error => {
+          console.log('get categories/effortValues/tagValues/recipe error: ' + JSON.stringify(error));
+          this.authService.logOut();
+        });
+    });
   }
 
   public getRecipe(): Observable<any> {
@@ -160,7 +182,8 @@ export class MenuItemComponent implements OnInit {
       this.backendService.addRecipe(recipe).subscribe(
         data1 => {
           console.log('recipe successfully added: ' + JSON.stringify(data1));
-          this.router.navigate(['/dashboard']).then(() => {});
+          this.router.navigate(['/dashboard']).then(() => {
+          });
         },
         error => {
           console.log('addRecipe error: ' + JSON.stringify(error));
@@ -177,7 +200,8 @@ export class MenuItemComponent implements OnInit {
       this.backendService.changeRecipe(recipe).subscribe(
         data => {
           console.log('recipe successfully changed: ' + JSON.stringify(data));
-          this.router.navigate(['/dashboard']).then(() => {});
+          this.router.navigate(['/dashboard']).then(() => {
+          });
         },
         error => {
           console.log('changeWorkout error: ' + error);
@@ -272,6 +296,12 @@ export class MenuItemComponent implements OnInit {
     this.recipeForm.patchValue({image1: null});
     this.recipeForm.get('image1').updateValueAndValidity();
     this.imageUrl1 = null;
+    if (this.hasImage2()) {
+      this.recipeForm.patchValue({image1: this.recipeForm.value.image2});
+      this.recipeForm.get('image2').updateValueAndValidity();
+      this.imageUrl1 = this.imageUrl2;
+      this.cancelPreview2(null);
+    }
   }
 
   showPreview2(event) {
@@ -291,6 +321,12 @@ export class MenuItemComponent implements OnInit {
     this.recipeForm.patchValue({image2: null});
     this.recipeForm.get('image2').updateValueAndValidity();
     this.imageUrl2 = null;
+    if (this.hasImage3()) {
+      this.recipeForm.patchValue({image2: this.recipeForm.value.image3});
+      this.recipeForm.get('image3').updateValueAndValidity();
+      this.imageUrl2 = this.imageUrl3;
+      this.cancelPreview3(null);
+    }
   }
 
   showPreview3(event) {
@@ -324,4 +360,24 @@ export class MenuItemComponent implements OnInit {
     return this.imageUrl3 && this.imageUrl3 !== '';
   }
 
+  isReadonly() {
+    return this.readonly;
+  }
+
+  setReadonly(readonly: boolean) {
+    this.readonly = readonly;
+    if (readonly) {
+      this.router.navigate(['/menuitem', this.recipeId], {queryParams: {ro: '1'}}).then(() => {
+      });
+    } else {
+      this.router.navigate(['/menuitem', this.recipeId], {queryParams: {ro: '0'}}).then(() => {
+      });
+    }
+  }
+
+  deleteRecipe() {
+    console.log('delete recipe ' + this.recipeId);
+    this.router.navigate(['/dashboard']).then(() => {
+    });
+  }
 }
