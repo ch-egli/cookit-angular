@@ -4,7 +4,7 @@ import {MenuItem} from '../core/backend.models';
 import {AuthService} from '../core/auth.service';
 import {BackendService} from '../core/backend.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Message, SelectItem} from 'primeng/api';
+import {ConfirmationService, Message, SelectItem} from 'primeng/api';
 import {forkJoin, Observable, of} from 'rxjs';
 
 @Component({
@@ -39,8 +39,8 @@ export class MenuItemComponent implements OnInit {
   msgs: Message[] = [];
   deCH: any;
 
-  constructor(private authService: AuthService, private backendService: BackendService, private route: ActivatedRoute,
-              private router: Router, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private backendService: BackendService, private confirmationService: ConfirmationService,
+              private route: ActivatedRoute, private router: Router, private fb: FormBuilder) {
     route.params.subscribe(val => {
       // console.log('route activated: ' + JSON.stringify(val));
       this.ngOnInit();
@@ -376,8 +376,19 @@ export class MenuItemComponent implements OnInit {
   }
 
   deleteRecipe() {
-    console.log('delete recipe ' + this.recipeId);
-    this.router.navigate(['/dashboard']).then(() => {
+    this.confirmationService.confirm({
+      message: 'Do you really want to delete the recipe?',
+      accept: () => {
+        this.backendService.deleteRecipe(Number(this.recipeId)).subscribe(
+          data => console.log('recipe successfully deleted: ' + this.recipeId),
+          error => console.log('deleteRecipe error: ' + error),
+          () => this.router.navigate(['/dashboard']).then(() => {})
+        );
+      },
+      reject: () => {
+        //console.log('delete recipe ' + this.recipeId + ' rejected');
+      }
     });
   }
+
 }

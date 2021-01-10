@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SbbButtonModule } from '@sbb-esta/angular-business/button';
 import { SbbLinksModule } from '@sbb-esta/angular-business/links';
-import {SBB_ICON_REGISTRY_PROVIDER, SbbIconModule} from '@sbb-esta/angular-core/icon';
+import { SBB_ICON_REGISTRY_PROVIDER, SbbIconModule } from '@sbb-esta/angular-core/icon';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MenuItemComponent, NavComponent, PageNotFoundComponent],
@@ -59,6 +61,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     MultiSelectModule,
     FileUploadModule,
     SbbIconModule,
+    ConfirmDialogModule,
     /*
         ButtonModule,
         RadioButtonModule,
@@ -87,7 +90,7 @@ import { FileUploadModule } from 'primeng/fileupload';
         RatingModule
     */
   ],
-  providers: [SBB_ICON_REGISTRY_PROVIDER],
+  providers: [SBB_ICON_REGISTRY_PROVIDER, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

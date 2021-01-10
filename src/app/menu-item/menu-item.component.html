@@ -1,4 +1,11 @@
 <p></p>
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button sbbButton type="button" (click)="cd.accept()">Yes</button>
+    <button sbbButton type="button" (click)="cd.reject()">No</button>
+  </p-footer>
+</p-confirmDialog>
+
 <div>
   <form [formGroup]="recipeForm" (ngSubmit)="save()">
 
@@ -6,7 +13,7 @@
       <button sbbButton type="button" mode="icon" (click)="setReadonly(false)" style="float:right" *ngIf="isReadonly()">
         <sbb-icon svgIcon="kom:pen-medium" *sbbIcon></sbb-icon>
       </button>
-      <button sbbButton type="button" mode="icon" (click)="deleteRecipe()" style="float:right">
+      <button sbbButton type="button" mode="icon" (click)="deleteRecipe()" style="float:right;margin-right:0.1em">
         <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
       </button>
     </div>

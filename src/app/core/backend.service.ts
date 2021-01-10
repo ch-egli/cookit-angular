@@ -52,6 +52,11 @@ export class BackendService {
     return this.http.post<any>(this.baseUrl + 'recipes', formData, {headers: authHeaders, responseType: 'json'});
   }
 
+  deleteRecipe(id: number) {
+    const authHeaders = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getIdToken()});
+    return this.http.delete<any>(this.baseUrl + 'recipes/' + id, {headers: authHeaders, responseType: 'json'})
+  }
+
   convertToFormData(recipe: any, isNew: boolean): any {
     let formData = new FormData();
     if (!isNew) {
