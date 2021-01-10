@@ -1,7 +1,7 @@
 <div *ngIf="hasValidSession; else emptyDashboardTemplate">
   <p>&nbsp;</p>
   <div>
-    <p-table [value]="recipes" styleClass="p-datatable-sm">
+    <p-table [value]="recipes" styleClass="p-datatable-sm" [globalFilterFields]="['title','category','tags','effort', 'description']">
       <ng-template pTemplate="header">
         <tr>
           <th>Title</th>
@@ -10,6 +10,24 @@
           <th class="d-none d-md-table-cell">Effort</th>
           <th class="d-none d-md-table-cell">Description</th>
           <th class="d-none d-lg-table-cell">Updated</th>
+        </tr>
+        <tr>
+          <th>
+            <p-columnFilter type="text" field="title" matchMode="contains" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="category" matchMode="contains" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="tags" matchMode="contains" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th class="d-none d-md-table-cell">
+            <p-columnFilter type="text" field="effort" matchMode="contains" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th class="d-none d-md-table-cell">
+            <p-columnFilter type="text" field="description" matchMode="contains"></p-columnFilter>
+          </th>
+          <th class="d-none d-md-table-cell"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-recipe>
