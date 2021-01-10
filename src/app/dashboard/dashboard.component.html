@@ -5,20 +5,20 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Title</th>
-          <th>Description</th>
-          <th class="d-none d-md-table-cell">Category</th>
+          <th>Category</th>
+          <th>Tags</th>
           <th class="d-none d-md-table-cell">Effort</th>
-          <th class="d-none d-md-table-cell">Tags</th>
+          <th class="d-none d-md-table-cell">Description</th>
           <th class="d-none d-lg-table-cell">Updated</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-recipe>
         <tr>
           <td><a [routerLink]="['/menuitem', recipe.id]" [queryParams]="{ ro: 1 }">{{recipe.title}}</a></td>
-          <td>{{recipe.description | truncate:[20, '...']}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.category}}</td>
+          <td>{{recipe.category}}</td>
+          <td>{{recipe.tags}}</td>
           <td class="d-none d-md-table-cell">{{recipe.effort}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.tags}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.description | truncate:[20, '...']}}</td>
           <td class="d-none d-lg-table-cell">{{recipe.updated_at}}</td>
         </tr>
       </ng-template>
