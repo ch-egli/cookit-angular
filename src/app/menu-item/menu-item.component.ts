@@ -396,7 +396,7 @@ export class MenuItemComponent implements OnInit {
   }
 
   downloadAsPdf() {
-    console.log('download as pdf...');
+    // console.log('download as pdf...');
     const val = this.recipeForm.value;
 
     let pdfContent: any[] = [];

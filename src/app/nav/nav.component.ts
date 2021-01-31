@@ -22,12 +22,12 @@ export class NavComponent implements OnInit {
         routerLink: ['/dashboard']
       },
       {
-        label:'New...',
+        label:'Nouveau...',
         icon:'pi pi-fw pi-plus',
         routerLink: ['/menuitem/new']
       },
       {
-        label:'Logout',
+        label:'Se déconnecter',
         icon:'pi pi-fw pi-power-off',
         routerLink: ['/'],
         command: (event) => {

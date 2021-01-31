@@ -23,7 +23,7 @@
     </div>
 
     <div class="form-group">
-      <div for="title">Title</div>
+      <div for="title">Titre</div>
       <input pInputText type="text" formControlName="title" name="title" class="ui-inputtext"/>
     </div>
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-group">
-      <div for="category">Category</div>
+      <div for="category">Catégorie</div>
       <p-dropdown [options]="categoryOptions" formControlName="category" name="category" [styleClass]="'dd-width'"></p-dropdown>
     </div>
 
@@ -43,7 +43,7 @@
     </div>
 
     <div class="form-group">
-      <div for="tags">Tags</div>
+      <div for="tags">Etiquettes</div>
       <p-multiSelect [options]="tagOptions" formControlName="tags" name="tags" optionLabel="label" [styleClass]="'dd-width'"></p-multiSelect>
     </div>
 
@@ -81,15 +81,15 @@
     </div>
 
     <div *ngIf="!isNew()">
-      <small style="float:right">last updated: {{updatedAt}}</small>
+      <small style="float:right">actualisée: {{updatedAt}}</small>
     </div>
 
     <p-messages [(value)]="msgs"></p-messages>
 
     <div class="form-buttons" style="padding-bottom:2rem">
-      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!isReadonly()" style="margin-right:0.5em;">Save</button>
-      <button sbbButton type="button" (click)="cancel()" *ngIf="!isReadonly()">Cancel</button>
-      <button sbbButton type="button" (click)="cancel()" *ngIf="isReadonly()">Back</button>
+      <button sbbButton type="submit" [disabled]="!recipeForm.valid" *ngIf="!isReadonly()" style="margin-right:0.5em;">Sauver</button>
+      <button sbbButton type="button" (click)="cancel()" *ngIf="!isReadonly()">Annuler</button>
+      <button sbbButton type="button" (click)="cancel()" *ngIf="isReadonly()">Retour</button>
     </div>
 
   </form>
