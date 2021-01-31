@@ -6,6 +6,10 @@ import {BackendService} from '../core/backend.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ConfirmationService, Message, SelectItem} from 'primeng/api';
 import {forkJoin, Observable, of} from 'rxjs';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-menu-item',
@@ -389,6 +393,42 @@ export class MenuItemComponent implements OnInit {
         //console.log('delete recipe ' + this.recipeId + ' rejected');
       }
     });
+  }
+
+  downloadAsPdf() {
+    console.log('download as pdf...');
+    const val = this.recipeForm.value;
+
+    let pdfContent: any[] = [];
+    pdfContent.push({text: val.title, fontSize: 14, bold: true, margin: [0, 0, 0, 10]});
+    pdfContent.push({columns: [{width: 60, text: 'Tags: ', fontSize: 11}, {width: '*', text: val.tags.join(','), fontSize: 11}]});
+    pdfContent.push({columns: [{width: 60, text: 'Effort: ', fontSize: 11}, {width: '*', text: val.effort, fontSize: 11}]});
+    pdfContent.push({columns: [{width: 60, text: 'Category: ', fontSize: 11}, {width: '*', text: val.category, fontSize: 11}]});
+    pdfContent.push({text: ' ', fontSize: 20});
+    pdfContent.push({text: val.description, fontSize: 11});
+    pdfContent.push({text: ' ', fontSize: 20});
+    if (this.imageUrl1 != null) {
+      pdfContent.push({image: this.imageUrl1, width: 400});
+      pdfContent.push({text: ' ', fontSize: 20});
+    }
+    if (this.imageUrl2 != null) {
+      pdfContent.push({image: this.imageUrl2, width: 400});
+      pdfContent.push({text: ' ', fontSize: 20});
+    }
+    if (this.imageUrl3 != null) {
+      pdfContent.push({image: this.imageUrl3, width: 400});
+    }
+
+    let docDefinition = {
+      content: pdfContent,
+      info: {
+        title: val.title,
+        subject: 'exported recipe',
+        author: 'Cookit'
+      },
+    };
+
+    pdfMake.createPdf(docDefinition).download('recette.pdf');
   }
 
 }

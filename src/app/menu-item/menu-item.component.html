@@ -10,10 +10,14 @@
   <form [formGroup]="recipeForm" (ngSubmit)="save()">
 
     <div class="form-group" style="height:2em">
-      <button sbbButton type="button" mode="icon" (click)="setReadonly(false)" style="float:right" *ngIf="isReadonly()">
+      <button sbbButton type="button" mode="icon" (click)="setReadonly(false)" style="float:right;margin-right:0.2em"
+              *ngIf="isReadonly()">
         <sbb-icon svgIcon="kom:pen-medium" *sbbIcon></sbb-icon>
       </button>
-      <button sbbButton type="button" mode="icon" (click)="deleteRecipe()" style="float:right;margin-right:0.1em">
+      <button sbbButton type="button" mode="icon" (click)="downloadAsPdf()" style="float:right;margin-right:0.2em">
+        <sbb-icon svgIcon="kom:document-pdf-medium" *sbbIcon></sbb-icon>
+      </button>
+      <button sbbButton type="button" mode="icon" (click)="deleteRecipe()" style="float:right;margin-right:0.2em">
         <sbb-icon svgIcon="kom:trash-medium" *sbbIcon></sbb-icon>
       </button>
     </div>
