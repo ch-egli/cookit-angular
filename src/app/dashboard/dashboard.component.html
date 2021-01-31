@@ -5,39 +5,39 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Titre</th>
-          <th>Catégorie</th>
-          <th>Etiquettes</th>
-          <th class="d-none d-md-table-cell">Effort</th>
-          <th class="d-none d-md-table-cell">Description</th>
-          <th class="d-none d-lg-table-cell">Actualisé</th>
+          <th class="d-none d-sm-table-cell">Catégorie</th>
+          <th class="d-none d-md-table-cell">Etiquettes</th>
+          <th class="d-none d-xl-table-cell">Difficulté</th>
+          <th class="d-none d-lg-table-cell">Description</th>
+          <th class="d-none d-xl-table-cell">Actualisé</th>
         </tr>
         <tr>
           <th>
             <p-columnFilter type="text" field="title" matchMode="contains" [showMenu]="false"></p-columnFilter>
           </th>
-          <th>
+          <th class="d-none d-sm-table-cell">
             <p-columnFilter type="text" field="category" matchMode="contains" [showMenu]="false"></p-columnFilter>
           </th>
-          <th>
+          <th class="d-none d-md-table-cell">
             <p-columnFilter type="text" field="tags" matchMode="contains" [showMenu]="false"></p-columnFilter>
           </th>
-          <th class="d-none d-md-table-cell">
+          <th class="d-none d-xl-table-cell">
             <p-columnFilter type="text" field="effort" matchMode="contains" [showMenu]="false"></p-columnFilter>
           </th>
-          <th class="d-none d-md-table-cell">
+          <th class="d-none d-lg-table-cell">
             <p-columnFilter type="text" field="description" matchMode="contains"></p-columnFilter>
           </th>
-          <th class="d-none d-md-table-cell"></th>
+          <th class="d-none d-xl-table-cell"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-recipe>
         <tr>
           <td><a [routerLink]="['/menuitem', recipe.id]" [queryParams]="{ ro: 1 }">{{recipe.title}}</a></td>
-          <td>{{recipe.category}}</td>
-          <td>{{recipe.tags}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.effort}}</td>
-          <td class="d-none d-md-table-cell">{{recipe.description | truncate:[20, '...']}}</td>
-          <td class="d-none d-lg-table-cell">{{recipe.updated_at}}</td>
+          <td class="d-none d-sm-table-cell">{{recipe.category}}</td>
+          <td class="d-none d-md-table-cell">{{recipe.tags}}</td>
+          <td class="d-none d-xl-table-cell">{{recipe.effort}}</td>
+          <td class="d-none d-lg-table-cell">{{recipe.description | truncate:[20, '...']}}</td>
+          <td class="d-none d-xl-table-cell">{{recipe.updated_at}}</td>
         </tr>
       </ng-template>
     </p-table>
